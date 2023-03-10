@@ -1,0 +1,35 @@
+{
+  "name": "your-bourse",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "open:cypress": "npx cypress open",
+    "eslint:fix": "eslint **/*.js --fix",
+    "cy-cli": "npx cypress run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Znakki/your-bourse.git"
+  },
+  "author": "Maksim Fruzorau",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Znakki/your-bourse/issues"
+  },
+  "homepage": "https://github.com/Znakki/your-bourse#readme",
+  "devDependencies": {
+    "cypress-mochawesome-reporter": "^3.3.0",
+    "eslint": "^8.34.0",
+    "eslint-config-prettier": "^8.7.0",
+    "eslint-plugin-cypress": "^2.12.1",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.8.4",
+    "randomstring": "^1.2.3"
+  },
+  "dependencies": {
+    "@cypress/xpath": "^2.0.3",
+    "cypress": "^12.7.0"
+  }
+}
