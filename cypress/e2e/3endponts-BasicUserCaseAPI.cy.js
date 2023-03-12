@@ -6,6 +6,14 @@ const categoryName = randomString.generate();
 const randomTag = randomString.generate();
 const randomTags = [randomString.generate(), randomString.generate()]; // WHAT ABOUT RECURSION
 
+const repeatedExpects = ({ path, status }) => {
+  expect(path.id).to.eq(10);
+  expect(path.category.name).to.eq(categoryName);
+  expect(status).to.eq(200);
+  expect(path.status).to.eq('available');
+  expect(path.category.id).to.eq(1);
+};
+
 describe('Scenario#1 e2e via API request - Basic case to cover creating a pet, getting a request', () => {
   it('User creates a pet and then get a result of it by tagName with updating tags case', () => {
     cy.request(
@@ -22,12 +30,8 @@ describe('Scenario#1 e2e via API request - Basic case to cover creating a pet, g
       }),
     ).then(({ body, status }) => {
       // response.body is automatically serialized into JSON
-      expect(body.id).eq(10);
-      expect(body.category.name).eq(categoryName);
-      expect(body.category.id).eq(1);
-      expect(body.tags[0].name).eq(randomTag);
-      expect(body.status).eq('available');
-      expect(status).eq(200);
+      repeatedExpects({ path: body, status: status });
+      expect(body.tags[0].name).to.eq(randomTag);
     });
 
     cy.request({
@@ -35,12 +39,8 @@ describe('Scenario#1 e2e via API request - Basic case to cover creating a pet, g
       qs: { tags: randomTag },
     }).then(({ body, status }) => {
       const pathToFirstTag = body[0];
-      expect(pathToFirstTag.id).eq(10);
-      expect(pathToFirstTag.category.name).eq(categoryName);
-      expect(pathToFirstTag.category.id).eq(1);
-      expect(pathToFirstTag.tags[0].name).eq(randomTag);
-      expect(pathToFirstTag.status).eq('available');
-      expect(status).eq(200);
+      repeatedExpects({ path: pathToFirstTag, status: status });
+      expect(pathToFirstTag.tags[0].name).to.eq(randomTag);
     });
 
     cy.request(
@@ -57,27 +57,19 @@ describe('Scenario#1 e2e via API request - Basic case to cover creating a pet, g
       }),
     ).then(({ body, status }) => {
       // response.body is automatically serialized into JSON
-      expect(body.id).eq(10);
-      expect(body.category.name).eq(categoryName);
-      expect(body.category.id).eq(1);
+      repeatedExpects({ path: body, status: status });
       const res = body.tags.every((tag) => {
         return randomTags.includes(tag.name);
       });
-      expect(res).eq(true);
-      expect(body.status).eq('available');
-      expect(status).eq(200);
+      expect(res).to.eq(true);
     });
 
     // tried to use cypress approach to make a call via commands feature
     cy.findPetsByTags(randomTags[0]).then(({ body, status }) => {
       const pathToFirstTag = body[0];
-      expect(pathToFirstTag.id).eq(10);
-      expect(pathToFirstTag.category.name).eq(categoryName);
-      expect(pathToFirstTag.category.id).eq(1);
-      expect(pathToFirstTag.tags[0].name).eq(randomTags[0]);
-      expect(pathToFirstTag.tags[1].name).eq(randomTags[1]);
-      expect(pathToFirstTag.status).eq('available');
-      expect(status).eq(200);
+      repeatedExpects({ path: pathToFirstTag, status: status });
+      expect(pathToFirstTag.tags[0].name).to.eq(randomTags[0]);
+      expect(pathToFirstTag.tags[1].name).to.eq(randomTags[1]);
     });
   });
 });

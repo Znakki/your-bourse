@@ -42,6 +42,7 @@ Scenarios that I should have covered by tests
 3. the user creates a pet with more than 1 tag and then the user tries to find a pet with each tag separately and then using all tags in the same time. 
 4. Boundaries for each field in 3 requests
 5. lower-upper case for the searching of pets by tags
+6. the user creates entities with specified ids
 
 
   
